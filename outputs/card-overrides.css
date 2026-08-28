@@ -2,3 +2,13 @@
   background: transparent;
   padding: 0;
 }
+
+.project-three .project-image img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
+}
