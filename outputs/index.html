@@ -85,12 +85,11 @@
 
       <section class="subscribe" id="subscribe" aria-labelledby="subscribe-title">
         <div><p class="eyebrow"><span></span> One email a month, give or take</p><h2 id="subscribe-title">Keep a light on<br />in the <em>inbox.</em></h2></div>
-        <form id="subscribe-form"><label for="email">Your email address</label><div class="email-row"><input id="email" type="email" required placeholder="you@example.com" /><button type="submit" aria-label="Subscribe">→</button></div><p class="form-note">New chapters, fresh projects, no nonsense.</p></form>
+        <form id="subscribe-form" action="https://buttondown.com/api/emails/embed-subscribe/clintmorris64" method="post"><label for="email">Your email address</label><div class="email-row"><input id="email" name="email" type="email" required placeholder="you@example.com" /><input type="hidden" name="embed" value="1" /><button type="submit" aria-label="Subscribe">→</button></div><p class="form-note">New chapters, fresh projects, no nonsense.</p></form>
       </section>
     </main>
 
     <footer id="about"><a class="wordmark" href="#top">clint<span>, not clinton</span></a><p>Writer, maker, collector of good questions.<br />Based somewhere under this sky.</p><div><a href="mailto:hello@clintnotclinton.com">hello@clintnotclinton.com</a><span>© 2026</span></div></footer>
-    <div class="toast" role="status" aria-live="polite">You’re on the list. See you next chapter.</div>
     <script src="script.js"></script>
   </body>
 </html>
