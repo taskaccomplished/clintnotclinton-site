@@ -52,3 +52,16 @@
 .cover-art:focus-visible > img {
   transform: scale(1.03);
 }
+
+.project-info .project-description {
+  margin: 8px 0 0;
+  color: #52605c;
+  font: 400 14px/1.4 "DM Sans";
+  letter-spacing: 0;
+}
+
+@media (min-width: 821px) {
+  .project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
