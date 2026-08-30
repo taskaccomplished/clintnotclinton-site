@@ -68,8 +68,36 @@
   text-transform: uppercase;
 }
 
+.orbital-mark {
+  padding: 0;
+}
+
+.orbital-mark > span {
+  position: absolute;
+  top: 33px;
+  left: 43px;
+  line-height: 1.25;
+}
+
+.orbital-dot {
+  top: 59px;
+  left: 144px;
+}
+
 @media (min-width: 821px) {
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .orbital-mark > span {
+    top: 19px;
+    left: 25px;
+  }
+
+  .orbital-dot {
+    top: 35px;
+    left: 92px;
   }
 }
