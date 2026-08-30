@@ -80,8 +80,8 @@
 }
 
 .orbital-dot {
-  top: 59px;
-  left: 144px;
+  top: 56px;
+  left: 105px;
 }
 
 @media (min-width: 821px) {
@@ -97,7 +97,7 @@
   }
 
   .orbital-dot {
-    top: 35px;
-    left: 92px;
+    top: 36px;
+    left: 67px;
   }
 }
