@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Clint, not Clinton orbital mark">
+  <rect width="512" height="512" rx="96" fill="#ede7da"/>
+  <circle cx="256" cy="256" r="166" fill="none" stroke="#1a2224" stroke-width="7"/>
+  <ellipse cx="256" cy="256" rx="125" ry="48" fill="none" stroke="#1a2224" stroke-width="7" transform="rotate(-28 256 256)"/>
+  <circle cx="256" cy="196" r="17" fill="#d85832"/>
+</svg>

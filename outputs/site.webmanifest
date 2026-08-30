@@ -1,0 +1,16 @@
+{
+  "name": "Clint, not Clinton",
+  "short_name": "Clint",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ede7da",
+  "theme_color": "#ede7da",
+  "icons": [
+    {
+      "src": "images/orbital-mark.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
