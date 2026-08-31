@@ -64,6 +64,45 @@
   font: 600 71px/.69 "Playfair Display";
 }
 
+.recipe {
+  margin: 47px 0;
+  padding: 29px 0 3px;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.recipe h2 {
+  margin: 0 0 22px;
+  font: 600 clamp(32px, 5vw, 45px)/1 "Playfair Display", serif;
+  letter-spacing: -.05em;
+}
+
+.recipe h3 {
+  margin: 27px 0 11px;
+  color: var(--rust);
+  font: 500 11px "DM Mono", monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.recipe ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recipe li,
+.recipe p {
+  margin: 0 0 9px;
+  font: 16px/1.55 "DM Sans", sans-serif;
+}
+
+.recipe .recipe-note {
+  margin: 24px 0 27px;
+  color: #52605c;
+  font: 500 13px/1.55 "DM Mono", monospace;
+}
+
 .project-end {
   display: flex;
   justify-content: space-between;
@@ -117,5 +156,9 @@
   .project-end {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .recipe {
+    margin: 38px 0;
   }
 }
