@@ -2,8 +2,30 @@
   background: #f2ede1;
 }
 
+.projects-page {
+  background: #f2ede1;
+}
+
 .project-header {
   max-width: 1100px;
+}
+
+.projects-hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 86px 34px 48px;
+}
+
+.projects-hero h1 {
+  margin: 18px 0 0;
+  font: 600 clamp(58px, 9vw, 110px)/.9 "Playfair Display", serif;
+  letter-spacing: -.07em;
+}
+
+.projects-list {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 34px 90px;
 }
 
 .project-hero {
@@ -136,6 +158,14 @@
 }
 
 @media (max-width: 700px) {
+  .projects-hero {
+    padding: 58px 20px 39px;
+  }
+
+  .projects-list {
+    padding: 0 20px 62px;
+  }
+
   .project-hero {
     padding: 58px 20px 44px;
   }
