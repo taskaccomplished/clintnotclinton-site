@@ -1,0 +1,64 @@
+.poem-page {
+  background: #f2ede1;
+}
+
+.poem-header {
+  max-width: 900px;
+}
+
+.poem-hero {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 92px 34px 57px;
+}
+
+.poem-hero h1 {
+  margin: 20px 0 0;
+  font: 600 clamp(54px, 9vw, 108px)/.9 "Playfair Display", serif;
+  letter-spacing: -.07em;
+}
+
+.poem-content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 34px 90px;
+}
+
+.poem-body {
+  border-top: 2px solid var(--ink);
+  padding-top: 38px;
+}
+
+.poem-body p {
+  margin: 0 0 31px;
+  font: 400 clamp(21px, 2.7vw, 30px)/1.48 "Playfair Display", serif;
+  letter-spacing: -.025em;
+}
+
+.poem-body p:last-child {
+  margin-bottom: 0;
+}
+
+.poem-end {
+  margin-top: 67px;
+  padding-top: 25px;
+  border-top: 1px solid var(--ink);
+}
+
+@media (max-width: 700px) {
+  .poem-hero {
+    padding: 58px 20px 45px;
+  }
+
+  .poem-content {
+    padding: 0 20px 62px;
+  }
+
+  .poem-body {
+    padding-top: 30px;
+  }
+
+  .poem-body p {
+    font-size: 22px;
+  }
+}
