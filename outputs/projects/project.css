@@ -2,6 +2,15 @@
   background: #f2ede1;
 }
 
+.project-message { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); }
+.project-message h2 { font: 600 32px "Playfair Display", serif; }
+.project-message label { display: block; margin-bottom: 10px; font: 12px "DM Mono", monospace; }
+.project-message textarea { display: block; width: 100%; box-sizing: border-box; resize: vertical; padding: 14px; color: var(--ink); background: var(--paper); border: 1px solid var(--ink); font: 16px/1.5 "DM Sans", sans-serif; }
+.project-message p { font: 14px/1.5 "DM Sans", sans-serif; overflow-wrap: anywhere; }
+.project-message a { color: inherit; }
+.project-message button { border: 0; cursor: pointer; }
+.project-message textarea:focus-visible, .project-message button:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+
 .app-download {
   margin-top: 24px;
   max-width: 100%;
