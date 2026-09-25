@@ -2,6 +2,12 @@
   background: #f2ede1;
 }
 
+.app-download {
+  margin-top: 24px;
+  max-width: 100%;
+  line-height: 1.5;
+}
+
 .projects-page {
   background: #f2ede1;
 }
