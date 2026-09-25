@@ -30,6 +30,35 @@
   margin-top: 32px;
 }
 
+.chapter-feedback {
+  margin-top: 52px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+}
+
+.chapter-feedback h2 {
+  margin: 0 0 22px;
+  font: 600 clamp(28px, 4vw, 38px)/1.15 "Playfair Display", serif;
+  letter-spacing: -.035em;
+}
+
+.chapter-feedback p { font: 17px/1.65 "DM Sans", sans-serif; }
+.chapter-feedback label { display: block; margin: 24px 0 10px; font: 12px "DM Mono", monospace; }
+.chapter-feedback textarea {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  padding: 14px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  font: 16px/1.5 "DM Sans", sans-serif;
+}
+.chapter-feedback .feedback-help { font-size: 13px; color: #52605c; }
+.chapter-feedback button { border: 0; cursor: pointer; }
+.chapter-feedback textarea:focus-visible,
+.chapter-feedback button:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+
 @media (max-width: 700px) {
   .chapter-countdown {
     grid-template-columns: 1fr;
