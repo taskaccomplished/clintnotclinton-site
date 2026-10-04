@@ -19,7 +19,7 @@ if (chapterEnd && !document.querySelector('.chapter-countdown')) {
   const countdown = document.createElement('section');
   countdown.className = 'chapter-countdown';
   countdown.setAttribute('aria-label', 'Countdown to Chapter Two release');
-  countdown.innerHTML = '<span>Next chapter · Noriko</span><strong data-release-countdown="2026-10-04T08:00:00-06:00">Loading countdown…</strong><small>October 4 · 8 AM MDT</small>';
+  countdown.innerHTML = '<span>Next chapter · Popo</span><strong data-release-countdown="2026-11-01T08:00:00-07:00">Loading countdown…</strong><small>November 1 · 8 AM MST</small>';
   chapterEnd.before(countdown);
 }
 
