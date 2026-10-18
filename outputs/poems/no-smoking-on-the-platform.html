@@ -76,9 +76,52 @@
           <p>My trainer used to use this track all the time. He explained that without understanding the words, it left people with a sense of connection to humanity, and a sense of something larger than themselves. “Those are the two greatest tools we have.” He would explain. “Connection to others, and a sense of perspective. Connection to others because they’re stronger together. A sense of perspective to help them see that their problems are temporary, and swallowed up in the greater story.”</p>
           <p>Rob’s train arrives and he shuffles on with everyone else. As the train pulls away I put on a new appearance and head up to the street following tiny wisps of smoke. I turn back to him and nod to myself as he starts a video call with his wife.</p>
         </div>
+        <section class="story-share" aria-labelledby="story-share-title">
+          <p class="eyebrow"><span></span> Pass it along</p>
+          <h2 id="story-share-title">Share with someone you think might enjoy this</h2>
+          <div class="story-share-actions">
+            <button class="button" type="button" data-story-share>Share this story <span>↗</span></button>
+            <button class="story-copy-link" type="button" data-story-copy>Copy link</button>
+          </div>
+          <p class="story-share-status" data-story-share-status role="status" aria-live="polite"></p>
+        </section>
         <div class="story-end"><a class="text-link" href="../index.html#notes">Back to poems &amp; musings <b>←</b></a></div>
       </article>
     </main>
     <footer><a class="wordmark" href="../index.html">clint<span>, not clinton</span></a><div><a href="mailto:clint.morris64@gmail.com">clint.morris64@gmail.com</a><span>© 2026</span></div></footer>
+    <script>
+      const shareButton = document.querySelector('[data-story-share]');
+      const copyButton = document.querySelector('[data-story-copy]');
+      const shareStatus = document.querySelector('[data-story-share-status]');
+      const storyShareData = {
+        title: 'No Smoking On the Platform',
+        text: 'A short story you might enjoy: No Smoking On the Platform',
+        url: window.location.href
+      };
+
+      async function copyStoryLink() {
+        try {
+          await navigator.clipboard.writeText(storyShareData.url);
+          shareStatus.textContent = 'Story link copied. Send it to someone who might enjoy it.';
+        } catch {
+          shareStatus.textContent = 'Copy this story link from your browser’s address bar.';
+        }
+      }
+
+      shareButton.addEventListener('click', async () => {
+        if (navigator.share) {
+          try {
+            await navigator.share(storyShareData);
+            shareStatus.textContent = 'Thanks for sharing.';
+          } catch (error) {
+            if (error.name !== 'AbortError') shareStatus.textContent = 'Sharing is unavailable here. Try copying the link.';
+          }
+        } else {
+          await copyStoryLink();
+        }
+      });
+
+      copyButton.addEventListener('click', copyStoryLink);
+    </script>
   </body>
 </html>
