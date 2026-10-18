@@ -81,6 +81,17 @@
   letter-spacing: -.065em;
 }
 
+.story-read-time {
+  display: inline-block;
+  margin: 17px 0 0;
+  padding: 9px 13px;
+  background: var(--ink);
+  color: #f2ede1;
+  font: 500 12px/1.2 "DM Mono", monospace;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
 .story-cover {
   display: block;
   width: 100%;
