@@ -57,6 +57,65 @@
   border-top: 1px solid var(--ink);
 }
 
+.story-page {
+  background: #f2ede1;
+}
+
+.story-header {
+  max-width: 1100px;
+}
+
+.story-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  gap: clamp(32px, 7vw, 92px);
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 76px 34px 66px;
+}
+
+.story-hero h1 {
+  margin: 20px 0 0;
+  font: 600 clamp(48px, 7vw, 90px)/.94 "Playfair Display", serif;
+  letter-spacing: -.065em;
+}
+
+.story-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  box-shadow: 18px 18px 0 #182124;
+}
+
+.story-content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 34px 90px;
+}
+
+.story-body {
+  border-top: 2px solid var(--ink);
+  padding-top: 38px;
+}
+
+.story-body p {
+  margin: 0 0 28px;
+  font: 400 clamp(19px, 2.4vw, 25px)/1.6 "Playfair Display", serif;
+  letter-spacing: -.018em;
+}
+
+.story-body p:last-child {
+  margin-bottom: 0;
+}
+
+.story-end {
+  margin-top: 67px;
+  padding-top: 25px;
+  border-top: 1px solid var(--ink);
+}
+
 @media (max-width: 700px) {
   .poem-hero {
     padding: 58px 20px 45px;
@@ -72,5 +131,26 @@
 
   .poem-body p {
     font-size: 22px;
+  }
+
+  .story-hero {
+    grid-template-columns: 1fr;
+    padding: 58px 20px 45px;
+  }
+
+  .story-cover {
+    width: min(100%, 360px);
+  }
+
+  .story-content {
+    padding: 0 20px 62px;
+  }
+
+  .story-body {
+    padding-top: 30px;
+  }
+
+  .story-body p {
+    font-size: 21px;
   }
 }
