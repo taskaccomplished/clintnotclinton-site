@@ -160,3 +160,6 @@
     left: 67px;
   }
 }
+.series-premise { max-width: 560px; }
+.latest-chapter-link { display: inline-block; margin: 18px 0 0 16px; color: var(--paper); font: 500 11px "DM Mono", monospace; letter-spacing: .04em; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 700px) { .latest-chapter-link { margin: 18px 0 0; } }

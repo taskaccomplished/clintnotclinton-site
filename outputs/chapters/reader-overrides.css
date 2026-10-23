@@ -59,6 +59,69 @@
 .chapter-feedback textarea:focus-visible,
 .chapter-feedback button:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
 
+.chapter-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-top: 24px;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.chapter-navigation a,
+.chapter-navigation span {
+  color: var(--ink);
+  font: 500 11px/1.5 "DM Mono", monospace;
+  letter-spacing: .035em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.chapter-navigation a:hover,
+.chapter-navigation a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+.chapter-navigation a:focus-visible,
+.chapter-subscribe .button:focus-visible,
+.chapter-share button:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+
+.chapter-subscribe {
+  margin-top: 25px;
+  padding: 20px 22px;
+  background: rgba(255, 255, 255, .38);
+}
+
+.chapter-subscribe p {
+  margin: 0 0 14px;
+  color: #52605c;
+  font: 14px/1.5 "DM Sans", sans-serif;
+}
+
+.chapter-subscribe .button { border: 0; cursor: pointer; }
+
+.chapter-share {
+  margin-top: 46px;
+  padding-top: 27px;
+  border-top: 1px solid var(--line);
+}
+
+.chapter-share h2 {
+  margin: 0 0 16px;
+  font: 600 clamp(25px, 4vw, 34px)/1.12 "Playfair Display", serif;
+  letter-spacing: -.035em;
+}
+
+.chapter-share button {
+  border: 0;
+  cursor: pointer;
+}
+
+.chapter-share-status {
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  color: #52605c;
+  font: 12px/1.4 "DM Mono", monospace;
+}
+
 @media (max-width: 700px) {
   .chapter-countdown {
     grid-template-columns: 1fr;
@@ -69,4 +132,9 @@
   .chapter-countdown strong {
     text-align: left;
   }
+
+  .chapter-navigation { align-items: flex-start; }
+  .chapter-navigation a,
+  .chapter-navigation span { max-width: 48%; }
+  .chapter-subscribe { padding: 18px; }
 }

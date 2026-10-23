@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="library.css" />
+    <link rel="stylesheet" href="library.css?v=20261022" />
   </head>
   <body class="chapters-page">
     <div class="grain" aria-hidden="true"></div>
@@ -29,18 +29,19 @@
       <section class="chapters-hero">
         <p class="eyebrow"><span></span> Monthly serial · Young adult sci-fi / fantasy</p>
         <h1>The Trial</h1>
+        <p class="chapters-intro">Earth is ruled by the Vorarae. Each year, humanity can challenge them in the Trial, a fight no human has ever won. Start with Chapter One, then continue in order.</p>
       </section>
       <section class="chapters-list" aria-label="The Trial chapters">
-        <article class="chapter-library-entry">
+        <article class="chapter-library-entry" id="chapter-01">
           <p class="chapter-library-number">Chapter 01</p>
           <div>
             <h2>Cyrus</h2>
             <p>Cyrus wakes to desert rain, a dead calf in his herd, and a summons that changes everything.</p>
             <p class="chapter-library-meta">August 2026 · 17 min read</p>
           </div>
-          <a class="button" href="cyrus.html">Read Chapter One <span>→</span></a>
+          <a class="button" href="cyrus.html" data-analytics-event="start_reading_click">Start Reading Free <span>→</span></a>
         </article>
-        <article class="chapter-library-entry">
+        <article class="chapter-library-entry" id="chapter-02">
           <p class="chapter-library-number">Chapter 02</p>
           <div>
             <h2>Noriko</h2>
@@ -49,7 +50,7 @@
           </div>
           <a class="button" href="noriko.html">Read Chapter Two <span>→</span></a>
         </article>
-        <article class="chapter-library-entry coming-soon">
+        <article class="chapter-library-entry coming-soon" id="chapter-03">
           <p class="chapter-library-number">Chapter 03</p>
           <div><h2>Popo</h2><p class="chapter-library-meta">Arrives November 1 · 8 AM MST</p></div>
           <span class="chapter-library-status">Coming soon</span>
@@ -57,5 +58,6 @@
       </section>
     </main>
     <footer><a class="wordmark" href="../index.html">clint<span>, not clinton</span></a><div><a href="mailto:clint.morris64@gmail.com">clint.morris64@gmail.com</a><span>© 2026</span></div></footer>
+    <script src="../script.js?v=20261022"></script>
   </body>
 </html>

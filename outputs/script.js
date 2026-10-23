@@ -14,11 +14,63 @@ if (toggle && nav) {
   }));
 }
 
+const trackEvent = (eventName, params = {}) => {
+  if (typeof window.gtag === 'function') window.gtag('event', eventName, params);
+};
+
+if (document.body.dataset.analyticsPage === 'novel-landing') {
+  trackEvent('novel_landing_page_view');
+}
+
+const chapterNumber = document.body.dataset.chapterNumber;
+if (chapterNumber) {
+  trackEvent('chapter_view', {
+    chapter_number: chapterNumber,
+    chapter_title: document.querySelector('.reader-hero h1')?.textContent.trim()
+  });
+}
+
+document.querySelectorAll('[data-analytics-event]').forEach((element) => {
+  element.addEventListener('click', () => {
+    const { analyticsEvent, chapter, signupLocation } = element.dataset;
+    trackEvent(analyticsEvent, {
+      chapter_number: chapter || chapterNumber || undefined,
+      location: signupLocation || undefined
+    });
+  });
+});
+
+document.querySelectorAll('[data-chapter-share]').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const shareUrl = window.location.href;
+    const title = document.title.split(' | ')[0];
+    const shareText = `Read ${title}, a chapter of The Trial.`;
+    const status = document.querySelector('[data-chapter-share-status]');
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text: shareText, url: shareUrl });
+        if (status) status.textContent = 'Thanks for sharing.';
+      } catch (error) {
+        if (error.name !== 'AbortError' && status) status.textContent = 'Sharing is unavailable here. You can copy the page address from your browser.';
+      }
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      if (status) status.textContent = 'Chapter link copied. Send it to someone who might enjoy it.';
+    } catch {
+      if (status) status.textContent = 'Copy the chapter address from your browser to share it.';
+    }
+  });
+});
+
 const chapterEnd = document.querySelector('.chapter-end');
-if (chapterEnd && !document.querySelector('.chapter-countdown')) {
+if (chapterEnd && chapterNumber === '2' && !document.querySelector('.chapter-countdown')) {
   const countdown = document.createElement('section');
   countdown.className = 'chapter-countdown';
-  countdown.setAttribute('aria-label', 'Countdown to Chapter Two release');
+  countdown.setAttribute('aria-label', 'Countdown to Chapter Three release');
   countdown.innerHTML = '<span>Next chapter · Popo</span><strong data-release-countdown="2026-11-01T08:00:00-07:00">Loading countdown…</strong><small>November 1 · 8 AM MST</small>';
   chapterEnd.before(countdown);
 }
@@ -31,7 +83,7 @@ document.querySelectorAll('[data-release-countdown]').forEach((countdown) => {
     const remaining = releaseTime - Date.now();
 
     if (remaining <= 0) {
-      countdown.textContent = 'Chapter Two is here';
+      countdown.textContent = 'Chapter Three is here';
       clearInterval(countdownInterval);
       return;
     }
