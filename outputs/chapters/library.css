@@ -34,31 +34,6 @@
   padding: 0 34px 90px;
 }
 
-.ownership-note {
-  max-width: 792px;
-  margin: -42px auto 78px;
-  padding: 17px 20px;
-  border-left: 2px solid var(--rust);
-  background: rgba(26, 34, 36, .045);
-}
-
-.ownership-note p {
-  margin: 0;
-  color: #52605c;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.ownership-note strong {
-  color: var(--ink);
-}
-
-.ownership-note a {
-  color: var(--ink);
-  text-decoration-color: var(--rust);
-  text-underline-offset: 3px;
-}
-
 .chapter-library-entry {
   display: grid;
   grid-template-columns: 125px 1fr auto;
@@ -126,10 +101,6 @@
 
   .chapters-list {
     padding: 0 20px 62px;
-  }
-
-  .ownership-note {
-    margin: -34px 20px 56px;
   }
 
   .chapter-library-entry {
