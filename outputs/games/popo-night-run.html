@@ -17,7 +17,7 @@
   .chip { border:2px solid #48674e; background:#14271f; padding:6px 10px; box-shadow:3px 3px #0a120e; white-space:nowrap; }
   .chip b { color:var(--gold); font-size:16px; margin-left:5px; }
   .frame { position:relative; border:4px solid #55714e; background:#07110f; box-shadow:0 0 0 4px #14251d,0 14px 40px #0009; overflow:hidden; }
-  canvas { display:block; width:100%; height:auto; image-rendering:pixelated; image-rendering:crisp-edges; touch-action:manipulation; }
+  canvas { display:block; width:100%; height:auto; image-rendering:pixelated; image-rendering:crisp-edges; touch-action:none; user-select:none; }
   .overlay { position:absolute; inset:0; display:grid; place-items:center; padding:20px; background:#07110fc9; text-align:center; }
   .overlay[hidden] { display:none }
   .card { max-width:440px; padding:24px; border:3px solid #78975a; background:#14271f; box-shadow:6px 6px #080e0b; }
@@ -50,7 +50,7 @@
 </main>
 <script>
 (() => {
-  const canvas = document.querySelector('#game'), ctx = canvas.getContext('2d');
+  const canvas = document.querySelector('#game'), frame = document.querySelector('.frame'), ctx = canvas.getContext('2d');
   const fruitEl = document.querySelector('#fruit'), heatEl = document.querySelector('#heat'), distanceEl = document.querySelector('#distance');
   const overlay = document.querySelector('#overlay'), headline = document.querySelector('#headline'), message = document.querySelector('#message'), startBtn = document.querySelector('#start');
   const W=canvas.width,H=canvas.height, ground=338;
@@ -61,7 +61,10 @@
   function reset(){ state='playing'; elapsed=distance=fruit=misses=0; speed=250; spawnIn=.8; fruitIn=1.2; roots=[];fruits=[];motes=[];shake=0;player.y=ground;player.vy=0;player.onGround=true;player.run=0;overlay.hidden=true;last=performance.now(); }
   function jump(){ if(state!=='playing'){ if(state==='ready'||state==='over') reset(); return; } if(player.onGround){player.vy=-545;player.onGround=false; puff(player.x+16,ground+3,'#d4c37c',8);} }
   document.addEventListener('keydown',e=>{if(['Space','ArrowUp','KeyW'].includes(e.code)){e.preventDefault();if(!e.repeat)jump();} if(e.code==='Enter'&&state!=='playing')reset();});
-  canvas.addEventListener('pointerdown',jump); startBtn.addEventListener('click',reset);
+  function handleTap(e){ if(e.target.closest && e.target.closest('button')) return; e.preventDefault(); jump(); }
+  if(window.PointerEvent) frame.addEventListener('pointerdown',handleTap,{passive:false});
+  else frame.addEventListener('touchstart',handleTap,{passive:false});
+  startBtn.addEventListener('click',reset);
   function puff(x,y,color,n=5){for(let i=0;i<n;i++)motes.push({x,y,vx:rand(-60,60),vy:rand(-110,-20),life:rand(.25,.55),max:.55,color,size:rand(2,4)});}
   function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));}
   function text(t,x,y,size,color,align='left'){ctx.font=`bold ${size}px monospace`;ctx.textAlign=align;ctx.fillStyle=color;ctx.fillText(t,x,y);}
