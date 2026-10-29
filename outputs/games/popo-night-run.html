@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101c17">
+<title>Popo: Night Run</title>
+<style>
+  :root { color-scheme: dark; --ink:#f8edc8; --lime:#c5ed74; --gold:#ffd35e; --panel:#13251e; }
+  * { box-sizing:border-box }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; background:radial-gradient(ellipse at 50% 0%,#26483a,#101914 65%); color:var(--ink); font:14px/1.5 ui-monospace,Menlo,Consolas,monospace; }
+  .shell { width:min(100%,960px); }
+  header { display:flex; align-items:end; justify-content:space-between; gap:18px; margin:0 auto 12px; }
+  h1 { margin:0; color:var(--gold); font-size:clamp(20px,4vw,32px); letter-spacing:.07em; text-shadow:3px 3px #733d29; }
+  .sub { color:#b4c3a6; margin:3px 0 0; font-size:12px; }
+  .hud { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+  .chip { border:2px solid #48674e; background:#14271f; padding:6px 10px; box-shadow:3px 3px #0a120e; white-space:nowrap; }
+  .chip b { color:var(--gold); font-size:16px; margin-left:5px; }
+  .frame { position:relative; border:4px solid #55714e; background:#07110f; box-shadow:0 0 0 4px #14251d,0 14px 40px #0009; overflow:hidden; }
+  canvas { display:block; width:100%; height:auto; image-rendering:pixelated; image-rendering:crisp-edges; touch-action:manipulation; }
+  .overlay { position:absolute; inset:0; display:grid; place-items:center; padding:20px; background:#07110fc9; text-align:center; }
+  .overlay[hidden] { display:none }
+  .card { max-width:440px; padding:24px; border:3px solid #78975a; background:#14271f; box-shadow:6px 6px #080e0b; }
+  .card h2 { color:var(--gold); margin:0 0 8px; font-size:24px; }
+  .card p { margin:8px 0 18px; color:#d5dfc4; }
+  button { font:inherit; font-weight:bold; color:#172219; background:var(--gold); border:0; padding:10px 18px; cursor:pointer; box-shadow:4px 4px #7b4d25; }
+  button:hover { background:#ffe38f; transform:translate(-1px,-1px); }
+  footer { display:flex; justify-content:space-between; gap:12px; color:#b4c3a6; font-size:12px; margin-top:12px; }
+  .mobile { display:none; }
+  @media(max-width:600px) { body{padding:14px} header{align-items:start;flex-direction:column} .hud{justify-content:start} footer{flex-direction:column}.mobile{display:inline} }
+</style>
+</head>
+<body>
+<main class="shell">
+  <header>
+    <div><h1>POPO: NIGHT RUN</h1><p class="sub">A rainforest escape • Chapter 3</p></div>
+    <div class="hud" aria-live="polite">
+      <div class="chip">PAOGO <b id="fruit">00</b></div>
+      <div class="chip">PURSUERS <b id="heat">♡♡♡♡♡</b></div>
+      <div class="chip">DISTANCE <b id="distance">000</b></div>
+    </div>
+  </header>
+  <div class="frame">
+    <canvas id="game" width="800" height="420" aria-label="Popo runs through a pixel art rainforest. Jump over roots and collect fruit."></canvas>
+    <div class="overlay" id="overlay">
+      <section class="card"><h2 id="headline">RUN, POPO, RUN!</h2><p id="message">Barefoot in the dark with guards on your heels. Jump the roots, grab paogo, and keep moving before they catch you.</p><button id="start">START RUN</button></section>
+    </div>
+  </div>
+  <footer><span>SPACE / ↑ / W or tap to jump</span><span class="mobile">Tap anywhere to leap</span><span>Fruit keeps your legs moving. Roots bring the guards closer.</span></footer>
+</main>
+<script>
+(() => {
+  const canvas = document.querySelector('#game'), ctx = canvas.getContext('2d');
+  const fruitEl = document.querySelector('#fruit'), heatEl = document.querySelector('#heat'), distanceEl = document.querySelector('#distance');
+  const overlay = document.querySelector('#overlay'), headline = document.querySelector('#headline'), message = document.querySelector('#message'), startBtn = document.querySelector('#start');
+  const W=canvas.width,H=canvas.height, ground=338;
+  let state='ready', last=0, elapsed=0, distance=0, fruit=0, misses=0, speed=250, spawnIn=1, fruitIn=1.5, shake=0;
+  let roots=[], fruits=[], motes=[];
+  const player={x:155,y:ground,w:34,h:52,vy:0,onGround:true,run:0};
+  const rand=(a,b)=>a+Math.random()*(b-a);
+  function reset(){ state='playing'; elapsed=distance=fruit=misses=0; speed=250; spawnIn=.8; fruitIn=1.2; roots=[];fruits=[];motes=[];shake=0;player.y=ground;player.vy=0;player.onGround=true;player.run=0;overlay.hidden=true;last=performance.now(); }
+  function jump(){ if(state!=='playing'){ if(state==='ready'||state==='over') reset(); return; } if(player.onGround){player.vy=-545;player.onGround=false; puff(player.x+16,ground+3,'#d4c37c',8);} }
+  document.addEventListener('keydown',e=>{if(['Space','ArrowUp','KeyW'].includes(e.code)){e.preventDefault();if(!e.repeat)jump();} if(e.code==='Enter'&&state!=='playing')reset();});
+  canvas.addEventListener('pointerdown',jump); startBtn.addEventListener('click',reset);
+  function puff(x,y,color,n=5){for(let i=0;i<n;i++)motes.push({x,y,vx:rand(-60,60),vy:rand(-110,-20),life:rand(.25,.55),max:.55,color,size:rand(2,4)});}
+  function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));}
+  function text(t,x,y,size,color,align='left'){ctx.font=`bold ${size}px monospace`;ctx.textAlign=align;ctx.fillStyle=color;ctx.fillText(t,x,y);}
+  function drawBackground(){
+    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#132d2b');g.addColorStop(.62,'#244538');g.addColorStop(1,'#15291e');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    // moon glow and distant canopy
+    ctx.fillStyle='#d4db9d';ctx.globalAlpha=.8;ctx.beginPath();ctx.arc(655,70,27,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+    for(let i=0;i<18;i++){let x=((i*73-(elapsed*18)%73)+W)%W;rect(x,76+(i%3)*24,24,4,'#385c47');rect(x+8,55+(i%4)*19,8,30,'#385c47');}
+    // layered trunks and giant leaves
+    for(let i=0;i<9;i++){let x=((i*117-(elapsed*34)%117)+W)%W;let top=45+(i%3)*20;rect(x,top,13,ground-top,'#193c31');rect(x+3,top,3,ground-top,'#315743');rect(x-18,top+30,45,5,'#39704c');rect(x-12,top+23,24,5,'#39704c');}
+    // jungle floor
+    rect(0,ground+10,W,H-ground-10,'#302d20');rect(0,ground+10,W,7,'#648047');rect(0,ground+17,W,3,'#9c9855');
+    for(let i=0;i<50;i++){const x=((i*37-(elapsed*speed*.45)%37)+W)%W;rect(x,ground+22+(i*17%52),2+(i%3),2,i%2?'#52653b':'#76683a');}
+    // foreground ferns
+    for(let i=0;i<12;i++){let x=((i*89-(elapsed*75)%89)+W)%W;rect(x,ground-13,3,13,'#47794a');rect(x-8,ground-17,10,3,'#59914d');rect(x+2,ground-22,10,3,'#4e824a');rect(x-5,ground-25,8,3,'#679d56');}
+  }
+  function drawPlayer(){
+    const bob=player.onGround?Math.abs(Math.sin(player.run))*2:0, y=player.y-bob, x=player.x;
+    // shadow
+    ctx.globalAlpha=.3;ctx.fillStyle='#050906';ctx.beginPath();ctx.ellipse(x+18,ground+8,22,5,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+    // legs, running stride
+    let stride=player.onGround?Math.sin(player.run)*7:2;
+    rect(x+9,y+36,7,13,'#8b5137');rect(x+20,y+36,7,13,'#8b5137');
+    rect(x+8+stride,y+47,11,4,'#d69b67');rect(x+19-stride,y+47,11,4,'#d69b67');
+    // shorts, broad torso and arm
+    rect(x+7,y+31,23,9,'#bd783c');rect(x+5,y+16,27,20,'#b86e44');rect(x+2,y+19,7,17,'#d08a5a');rect(x+28,y+19,7,15,'#d08a5a');
+    // head, hair, face
+    rect(x+10,y+2,20,17,'#d69b67');rect(x+8,y,22,7,'#1b1715');rect(x+7,y+5,5,10,'#1b1715');rect(x+23,y+9,3,3,'#201a15');rect(x+29,y+12,5,3,'#864735');
+    // sweat glint
+    if(state==='playing'&&Math.random()<.04) puff(x+31,y+8,'#c5ed74',1);
+  }
+  function drawRoot(o){let x=o.x;rect(x,ground+3,6,14,'#9a6536');rect(x+5,ground-2,24,7,'#bd8143');rect(x+24,ground-7,7,12,'#9a6536');rect(x+16,ground-6,5,12,'#d29a51');rect(x+3,ground+10,34,3,'#67452f');}
+  function drawFruit(o){let x=o.x,y=o.y;rect(x+5,y,8,3,'#83a94b');rect(x+8,y-3,4,4,'#a9cb60');rect(x+2,y+3,15,13,'#f3c84e');rect(x,y+7,4,8,'#e2a83d');rect(x+15,y+6,4,7,'#dc9a32');rect(x+6,y+6,3,3,'#fff0a2');}
+  function drawChasers(){
+    const count=3;for(let i=0;i<count;i++){let x=40+i*42+Math.sin(elapsed*5+i)*3, y=ground+4+(i%2)*3;
+      rect(x+5,y+10,17,22,'#55483d');rect(x+8,y,13,14,'#927456');rect(x+7,y-2,14,6,'#25221d');rect(x+9,y+5,3,3,'#f0c95b');rect(x+17,y+5,3,3,'#f0c95b');rect(x+9,y+30,5,15,'#39372e');rect(x+17,y+30,5,15,'#39372e');rect(x+20,y+15,10,4,'#9c9a87');
+    }
+  }
+  function draw(){ctx.save();if(shake>0)ctx.translate(rand(-shake,shake),rand(-shake,shake));drawBackground();drawChasers();for(const o of roots)drawRoot(o);for(const o of fruits)drawFruit(o);drawPlayer();
+    for(const m of motes){ctx.globalAlpha=Math.max(0,m.life/m.max);rect(m.x,m.y,m.size,m.size,m.color);}ctx.globalAlpha=1;
+    if(state==='playing'&&elapsed<4){ctx.globalAlpha=Math.max(0,1-elapsed/4);text('JUMP THE ROOTS • GRAB PAOGO',W/2,57,15,'#e9edc8','center');ctx.globalAlpha=1;}
+    ctx.restore();requestAnimationFrame(loop);
+  }
+  function end(){state='over';headline.textContent='THE GUARDS CAUGHT UP';message.textContent=`Popo ran ${Math.floor(distance)} meters and found ${fruit} paogo fruit. ${fruit?'Good run.':'The jungle is still there when you’re ready.'}`;startBtn.textContent='RUN AGAIN';overlay.hidden=false;}
+  function loop(now){let dt=Math.min(.04,(now-last)/1000||0);last=now;if(state==='playing')update(dt);draw();}
+  function update(dt){elapsed+=dt;distance+=dt*speed/12;speed=Math.min(390,250+elapsed*3);player.run+=dt*13;player.vy+=1450*dt;player.y+=player.vy*dt;if(player.y>=ground){player.y=ground;player.vy=0;player.onGround=true;}
+    spawnIn-=dt;if(spawnIn<=0){roots.push({x:W+20,passed:false});spawnIn=rand(.95,1.65)*Math.max(.7,250/speed);}
+    fruitIn-=dt;if(fruitIn<=0){fruits.push({x:W+10,y:rand(ground-105,ground-55)});fruitIn=rand(1.1,2.1);}
+    for(const o of roots){o.x-=speed*dt;if(!o.passed&&o.x<player.x+player.w&&o.x+34>player.x&&player.y>ground-15){o.passed=true;misses++;shake=7;puff(player.x+20,ground,'#b47a48',12);}
+      if(!o.passed&&o.x+34<player.x){o.passed=true;}}
+    roots=roots.filter(o=>o.x>-45);for(const o of fruits){o.x-=speed*dt;if(o.x<player.x+player.w&&o.x+18>player.x&&o.y<player.y+player.h&&o.y+16>player.y){o.got=true;fruit++;puff(o.x,o.y,'#f3d866',10);}}fruits=fruits.filter(o=>o.x>-30&&!o.got);
+    for(const m of motes){m.life-=dt;m.x+=m.vx*dt;m.y+=m.vy*dt;m.vy+=240*dt;}motes=motes.filter(m=>m.life>0);shake=Math.max(0,shake-dt*20);
+    fruitEl.textContent=String(fruit).padStart(2,'0');heatEl.textContent='♡'.repeat(Math.max(0,5-misses))+'♥'.repeat(Math.min(5,misses));distanceEl.textContent=String(Math.floor(distance)).padStart(3,'0');if(misses>=5)end();
+  }
+  function loopStart(){last=performance.now();requestAnimationFrame(loop)}
+  drawBackground();drawChasers();drawPlayer();loopStart();
+})();
+</script>
+</body>
+</html>
