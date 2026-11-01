@@ -110,7 +110,7 @@
   }
   function end(){state='over';headline.textContent='THE GUARDS CAUGHT UP';message.textContent=`Popo ran ${Math.floor(distance)} meters and found ${fruit} paogo fruit. ${fruit?'Good run.':'The jungle is still there when you’re ready.'}`;startBtn.textContent='RUN AGAIN';overlay.hidden=false;}
   function loop(now){let dt=Math.min(.04,(now-last)/1000||0);last=now;if(state==='playing')update(dt);draw();}
-  function update(dt){elapsed+=dt;speed=Math.min(390,250+elapsed*3)*speedMultiplier;distance+=dt*speed/12;player.run+=dt*13;player.vy+=1450*dt;player.y+=player.vy*dt;if(player.y>=ground){player.y=ground;player.vy=0;player.onGround=true;}
+  function update(dt){elapsed+=dt;speed=(250+elapsed*3)*speedMultiplier;distance+=dt*speed/12;player.run+=dt*13;player.vy+=1450*dt;player.y+=player.vy*dt;if(player.y>=ground){player.y=ground;player.vy=0;player.onGround=true;}
     spawnIn-=dt;if(spawnIn<=0){roots.push({x:W+20,passed:false});spawnIn=rand(.95,1.65)*Math.max(.7,250/speed);}
     fruitIn-=dt;if(fruitIn<=0){fruits.push({x:W+10,y:rand(ground-105,ground-55)});fruitIn=rand(1.1,2.1);}
     for(const o of roots){o.x-=speed*dt;if(!o.passed&&o.x<player.x+player.w&&o.x+34>player.x&&player.y>ground-15){o.passed=true;misses++;shake=7;puff(player.x+20,ground,'#b47a48',12);}
