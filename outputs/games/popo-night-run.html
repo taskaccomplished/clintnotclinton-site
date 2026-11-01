@@ -54,11 +54,11 @@
   const fruitEl = document.querySelector('#fruit'), heatEl = document.querySelector('#heat'), distanceEl = document.querySelector('#distance');
   const overlay = document.querySelector('#overlay'), headline = document.querySelector('#headline'), message = document.querySelector('#message'), startBtn = document.querySelector('#start');
   const W=canvas.width,H=canvas.height, ground=338;
-  let state='ready', last=0, elapsed=0, distance=0, fruit=0, misses=0, speed=250, spawnIn=1, fruitIn=1.5, shake=0;
+  let state='ready', last=0, elapsed=0, distance=0, fruit=0, misses=0, speed=250, speedMultiplier=1, spawnIn=1, fruitIn=1.5, shake=0;
   let roots=[], fruits=[], motes=[];
   const player={x:155,y:ground,w:34,h:52,vy:0,onGround:true,run:0};
   const rand=(a,b)=>a+Math.random()*(b-a);
-  function reset(){ state='playing'; elapsed=distance=fruit=misses=0; speed=250; spawnIn=.8; fruitIn=1.2; roots=[];fruits=[];motes=[];shake=0;player.y=ground;player.vy=0;player.onGround=true;player.run=0;overlay.hidden=true;last=performance.now(); }
+  function reset(){ state='playing'; elapsed=distance=fruit=misses=0; speed=250; speedMultiplier=1; spawnIn=.8; fruitIn=1.2; roots=[];fruits=[];motes=[];shake=0;player.y=ground;player.vy=0;player.onGround=true;player.run=0;overlay.hidden=true;last=performance.now(); }
   function jump(){ if(state!=='playing'){ if(state==='ready'||state==='over') reset(); return; } if(player.onGround){player.vy=-545;player.onGround=false; puff(player.x+16,ground+3,'#d4c37c',8);} }
   document.addEventListener('keydown',e=>{if(['Space','ArrowUp','KeyW'].includes(e.code)){e.preventDefault();if(!e.repeat)jump();} if(e.code==='Enter'&&state!=='playing')reset();});
   function handleTap(e){ if(e.target.closest && e.target.closest('button')) return; e.preventDefault(); jump(); }
@@ -110,12 +110,12 @@
   }
   function end(){state='over';headline.textContent='THE GUARDS CAUGHT UP';message.textContent=`Popo ran ${Math.floor(distance)} meters and found ${fruit} paogo fruit. ${fruit?'Good run.':'The jungle is still there when you’re ready.'}`;startBtn.textContent='RUN AGAIN';overlay.hidden=false;}
   function loop(now){let dt=Math.min(.04,(now-last)/1000||0);last=now;if(state==='playing')update(dt);draw();}
-  function update(dt){elapsed+=dt;distance+=dt*speed/12;speed=Math.min(390,250+elapsed*3);player.run+=dt*13;player.vy+=1450*dt;player.y+=player.vy*dt;if(player.y>=ground){player.y=ground;player.vy=0;player.onGround=true;}
+  function update(dt){elapsed+=dt;speed=Math.min(390,250+elapsed*3)*speedMultiplier;distance+=dt*speed/12;player.run+=dt*13;player.vy+=1450*dt;player.y+=player.vy*dt;if(player.y>=ground){player.y=ground;player.vy=0;player.onGround=true;}
     spawnIn-=dt;if(spawnIn<=0){roots.push({x:W+20,passed:false});spawnIn=rand(.95,1.65)*Math.max(.7,250/speed);}
     fruitIn-=dt;if(fruitIn<=0){fruits.push({x:W+10,y:rand(ground-105,ground-55)});fruitIn=rand(1.1,2.1);}
     for(const o of roots){o.x-=speed*dt;if(!o.passed&&o.x<player.x+player.w&&o.x+34>player.x&&player.y>ground-15){o.passed=true;misses++;shake=7;puff(player.x+20,ground,'#b47a48',12);}
       if(!o.passed&&o.x+34<player.x){o.passed=true;}}
-    roots=roots.filter(o=>o.x>-45);for(const o of fruits){o.x-=speed*dt;if(o.x<player.x+player.w&&o.x+18>player.x&&o.y<player.y+player.h&&o.y+16>player.y){o.got=true;fruit++;puff(o.x,o.y,'#f3d866',10);}}fruits=fruits.filter(o=>o.x>-30&&!o.got);
+    roots=roots.filter(o=>o.x>-45);for(const o of fruits){o.x-=speed*dt;if(o.x<player.x+player.w&&o.x+18>player.x&&o.y<player.y+player.h&&o.y+16>player.y){o.got=true;fruit++;speedMultiplier*=1.06;puff(o.x,o.y,'#f3d866',10);}}fruits=fruits.filter(o=>o.x>-30&&!o.got);
     for(const m of motes){m.life-=dt;m.x+=m.vx*dt;m.y+=m.vy*dt;m.vy+=240*dt;}motes=motes.filter(m=>m.life>0);shake=Math.max(0,shake-dt*20);
     fruitEl.textContent=String(fruit).padStart(2,'0');heatEl.textContent='♡'.repeat(Math.max(0,5-misses))+'♥'.repeat(Math.min(5,misses));distanceEl.textContent=String(Math.floor(distance)).padStart(3,'0');if(misses>=5)end();
   }
