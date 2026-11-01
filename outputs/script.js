@@ -71,7 +71,7 @@ if (chapterEnd && chapterNumber === '2' && !document.querySelector('.chapter-cou
   const countdown = document.createElement('section');
   countdown.className = 'chapter-countdown';
   countdown.setAttribute('aria-label', 'Countdown to Chapter Three release');
-  countdown.innerHTML = '<span>Next chapter · Popo</span><strong data-release-countdown="2026-11-01T08:00:00-07:00">Loading countdown…</strong><small>November 1 · 8 AM MST</small>';
+  countdown.innerHTML = '<span>Next chapter · Popo</span><strong data-release-countdown="2026-11-08T08:00:00-07:00">Loading countdown…</strong><small>November 8 · 8 AM MST</small>';
   chapterEnd.before(countdown);
 }
 
