@@ -1,3 +1,17 @@
+.reader-artwork {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 36px 34px 0;
+}
+
+.reader-artwork img {
+  display: block;
+  width: 100%;
+  height: min(68vh, 580px);
+  object-fit: contain;
+  background: var(--ink);
+}
+
 .chapter-countdown {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -123,6 +137,14 @@
 }
 
 @media (max-width: 700px) {
+  .reader-artwork {
+    padding: 26px 20px 0;
+  }
+
+  .reader-artwork img {
+    height: min(62vh, 500px);
+  }
+
   .chapter-countdown {
     grid-template-columns: 1fr;
     gap: 7px;
