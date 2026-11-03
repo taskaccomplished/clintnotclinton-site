@@ -1,15 +1,55 @@
 .reader-artwork {
+  position: relative;
+  width: calc(100% - 68px);
   max-width: 860px;
-  margin: 0 auto;
-  padding: 36px 34px 0;
+  aspect-ratio: 1.85;
+  margin: 40px auto 0;
+  overflow: hidden;
+  background: var(--ink);
 }
 
 .reader-artwork img {
   display: block;
-  width: 100%;
-  height: min(68vh, 580px);
+  width: 58%;
+  height: 100%;
   object-fit: contain;
-  background: var(--ink);
+  object-position: left center;
+}
+
+.reader-artwork::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 32%, rgba(26, 34, 36, .52) 54%, var(--ink) 78%);
+  content: "";
+  pointer-events: none;
+}
+
+.reader-artwork figcaption {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 6%;
+  width: 36%;
+  color: var(--paper);
+  transform: translateY(-50%);
+}
+
+.reader-artwork .chapter-cover-number {
+  margin: 0 0 15px;
+  color: var(--acid);
+  font: 500 11px "DM Mono", monospace;
+  letter-spacing: .12em;
+}
+
+.reader-artwork h1 {
+  margin: 0;
+  font: 600 clamp(48px, 7vw, 82px)/.9 "Playfair Display", serif;
+  letter-spacing: -.07em;
+}
+
+.reader-hero {
+  padding-top: 30px;
+  padding-bottom: 44px;
 }
 
 .chapter-countdown {
@@ -138,11 +178,36 @@
 
 @media (max-width: 700px) {
   .reader-artwork {
-    padding: 26px 20px 0;
+    width: calc(100% - 40px);
+    aspect-ratio: 1.32;
+    margin-top: 28px;
   }
 
   .reader-artwork img {
-    height: min(62vh, 500px);
+    width: 56%;
+  }
+
+  .reader-artwork::after {
+    background: linear-gradient(90deg, transparent 27%, rgba(26, 34, 36, .58) 52%, var(--ink) 80%);
+  }
+
+  .reader-artwork figcaption {
+    right: 5%;
+    width: 42%;
+  }
+
+  .reader-artwork .chapter-cover-number {
+    margin-bottom: 9px;
+    font-size: 9px;
+  }
+
+  .reader-artwork h1 {
+    font-size: clamp(36px, 9vw, 54px);
+  }
+
+  .reader-hero {
+    padding-top: 21px;
+    padding-bottom: 36px;
   }
 
   .chapter-countdown {
