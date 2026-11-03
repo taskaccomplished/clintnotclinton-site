@@ -134,6 +134,14 @@
 
 .chapter-navigation a:hover,
 .chapter-navigation a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+
+.chapter-navigation-top {
+  width: calc(100% - 68px);
+  max-width: 860px;
+  margin: 18px auto 0;
+  padding: 0;
+  border: 0;
+}
 .chapter-navigation a:focus-visible,
 .chapter-subscribe .button:focus-visible,
 .chapter-share button:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
@@ -180,7 +188,12 @@
   .reader-artwork {
     width: calc(100% - 40px);
     aspect-ratio: 1.32;
-    margin-top: 28px;
+    margin-top: 16px;
+  }
+
+  .chapter-navigation-top {
+    width: calc(100% - 40px);
+    margin-top: 15px;
   }
 
   .reader-artwork img {
