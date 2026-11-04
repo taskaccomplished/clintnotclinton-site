@@ -26,7 +26,7 @@ const chapterNumber = document.body.dataset.chapterNumber;
 if (chapterNumber) {
   trackEvent('chapter_view', {
     chapter_number: chapterNumber,
-    chapter_title: document.querySelector('.reader-hero h1')?.textContent.trim()
+    chapter_title: document.querySelector('.reader-artwork h1, .reader-hero h1')?.textContent.trim()
   });
 }
 
@@ -67,11 +67,11 @@ document.querySelectorAll('[data-chapter-share]').forEach((button) => {
 });
 
 const chapterEnd = document.querySelector('.chapter-end');
-if (chapterEnd && chapterNumber === '2' && !document.querySelector('.chapter-countdown')) {
+if (chapterEnd && chapterNumber === '3' && !document.querySelector('.chapter-countdown')) {
   const countdown = document.createElement('section');
   countdown.className = 'chapter-countdown';
-  countdown.setAttribute('aria-label', 'Countdown to Chapter Three release');
-  countdown.innerHTML = '<span>Next chapter · Popo</span><strong data-release-countdown="2026-11-08T08:00:00-07:00">Loading countdown…</strong><small>November 8 · 8 AM MST</small>';
+  countdown.setAttribute('aria-label', 'Countdown to Chapter Four release');
+  countdown.innerHTML = '<span>Next chapter · Chapter Four</span><strong data-release-countdown="2026-12-06T08:00:00-07:00">Loading countdown…</strong><small>December 6 · 8 AM MST</small>';
   chapterEnd.before(countdown);
 }
 
@@ -83,7 +83,7 @@ document.querySelectorAll('[data-release-countdown]').forEach((countdown) => {
     const remaining = releaseTime - Date.now();
 
     if (remaining <= 0) {
-      countdown.textContent = 'Chapter Three is here';
+      countdown.textContent = 'Chapter Four is here';
       clearInterval(countdownInterval);
       return;
     }

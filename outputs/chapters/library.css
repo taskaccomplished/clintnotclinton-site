@@ -94,6 +94,17 @@
   text-transform: uppercase;
 }
 
+.chapter-entry-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.chapter-entry-actions .text-link {
+  font-size: 10px;
+}
+
 @media (max-width: 700px) {
   .chapters-hero {
     padding: 58px 20px 39px;
@@ -110,6 +121,10 @@
 
   .chapter-library-entry .button,
   .chapter-library-status {
+    justify-self: start;
+  }
+
+  .chapter-entry-actions {
     justify-self: start;
   }
 }
